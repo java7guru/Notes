@@ -2,13 +2,17 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:cardElevation="@dimen/view_notes_item_card_elevation"
     app:cardCornerRadius="@dimen/view_notes_item_corner_radius"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="@dimen/view_notes_item_padding"
     android:id="@+id/card_view"
-    android:padding="@dimen/view_notes_item_padding"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
+        tools:text="text"
         android:textSize="@dimen/view_notes_item_title_text_size"
         android:textColor="@android:color/black"
         android:id="@+id/title_text_view"
