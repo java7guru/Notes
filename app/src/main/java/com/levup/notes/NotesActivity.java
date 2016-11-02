@@ -47,6 +47,11 @@ public class NotesActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
@@ -63,5 +68,7 @@ public class NotesActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+
+
     }
 }
