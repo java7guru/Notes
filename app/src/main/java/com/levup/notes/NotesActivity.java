@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.levup.notes.adapters.NotesAdapter;
+import com.levup.notes.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,16 @@ public class NotesActivity extends AppCompatActivity {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         NotesAdapter adapter = new NotesAdapter();
-        List<String> dataSource = new ArrayList<>();
+        List<Note> dataSource = new ArrayList<>();
         for(int i = 0; i < 100; i ++) {
-            dataSource.add("title: " + i);
+            Note note = new Note();
+            note.setTitle("title: " + i);
+            note.setText("text: " + i);
+            note.setTime(System.currentTimeMillis());
+            dataSource.add(note);
         }
         recyclerView.setAdapter(adapter);
-        adapter.setmDataSource(dataSource);
+        adapter.setDataSource(dataSource);
     }
 
     @Override
