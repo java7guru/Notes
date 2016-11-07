@@ -10,8 +10,12 @@ import com.levup.notes.R;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
- * Created by java on 31.10.2016.
+ * Created by java on 31.10.2016.A
+ *
  */
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
@@ -44,13 +48,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         return dataSource.size();
     }
 
-    static class NotesViewHolder extends RecyclerView.ViewHolder {
+    public static class NotesViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView titleTextView = null;
+        @BindView(R.id.title_text_view)
+        protected TextView titleTextView;
 
         public NotesViewHolder(View itemView) {
             super(itemView);
-            titleTextView = (TextView) itemView.findViewById(R.id.title_text_view);
+            ButterKnife.bind(this, itemView);
         }
 
         void bindView(String title) {

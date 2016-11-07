@@ -15,19 +15,24 @@ import com.levup.notes.adapters.NotesAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class NotesActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerView = null;
-    private Toolbar toolbar = null;
+    @BindView(R.id.notes_recycler_view)
+    protected RecyclerView recyclerView;
+    @BindView(R.id.toolbar)
+    protected Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
         setTitle(R.string.app_name);
-        recyclerView = (RecyclerView) findViewById(R.id.notes_recycler_view);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
         NotesAdapter adapter = new NotesAdapter();
