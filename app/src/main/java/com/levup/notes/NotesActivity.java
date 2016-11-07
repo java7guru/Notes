@@ -41,7 +41,7 @@ public class NotesActivity extends AppCompatActivity {
             dataSource.add("title: " + i);
         }
         recyclerView.setAdapter(adapter);
-        adapter.setDataSource(dataSource);
+        adapter.setmDataSource(dataSource);
     }
 
     @Override

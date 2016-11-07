@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.levup.notes.R;
+import com.levup.notes.model.Note;
 
 import java.util.List;
 
@@ -20,10 +21,10 @@ import butterknife.ButterKnife;
 
 public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHolder> {
 
-    private List<String> dataSource = null;
+    private List<Note> mDataSource = null;
 
-    public void setDataSource(List<String> dataSource) {
-        this.dataSource = dataSource;
+    public void setDataSource(List<Note> dataSource) {
+        this.mDataSource = dataSource;
         notifyDataSetChanged();
     }
 
@@ -36,21 +37,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     @Override
     public void onBindViewHolder(NotesViewHolder holder, int position) {
-        String title = dataSource.get(position);
-        holder.bindView(title);
+        Note note = mDataSource.get(position);
+        holder.bindView(note);
     }
 
     @Override
     public int getItemCount() {
-        if(dataSource == null)
-            return 0;
-
-        return dataSource.size();
+        return mDataSource == null ? 0 : mDataSource.size();
     }
 
     public static class NotesViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.title_text_view)
+        @BindView(R.id.primary_text_view)
         protected TextView titleTextView;
 
         public NotesViewHolder(View itemView) {
@@ -58,8 +56,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
             ButterKnife.bind(this, itemView);
         }
 
-        void bindView(String title) {
-            titleTextView.setText(title);
+        void bindView(Note note) {
+            titleTextView.setText(note.getTitle());
         }
     }
 
