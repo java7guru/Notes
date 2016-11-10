@@ -1,8 +1,8 @@
-package com.levup.notes;
+package com.levup.notes.activities;
 
+import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -10,15 +10,16 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
+import com.levup.notes.R;
 import com.levup.notes.adapters.NotesAdapter;
 import com.levup.notes.model.Note;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class NotesActivity extends AppCompatActivity {
 
@@ -54,6 +55,11 @@ public class NotesActivity extends AppCompatActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.notes_menu, menu);
         return true;
+    }
+
+    @OnClick(R.id.fab_button)
+    public void onFabBtnClick() {
+        startActivity(EditNoteActivity.newInstance(this));
     }
 
     @Override
