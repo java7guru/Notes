@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
@@ -14,6 +15,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditNoteActivity extends AppCompatActivity {
+
+    private static final String SHARE_TYPE = "text/plain";
 
     @BindView(R.id.titleEditText)
     protected EditText mTitleEditText;
@@ -36,13 +39,39 @@ public class EditNoteActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.note_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
                 finish();
                 break;
             }
+            case R.id.action_share: {
+                share();
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void share() {
+        Intent shareIntent = new Intent();
+        shareIntent.setAction(Intent.ACTION_SEND);
+        shareIntent.putExtra(Intent.EXTRA_TEXT, prepareNoteForSharing());
+        shareIntent.setType(SHARE_TYPE);
+        startActivity(shareIntent);
+    }
+
+    private String prepareNoteForSharing() {
+        return getString(
+                R.string.sharing_template,
+                mTitleEditText.getText(),
+                mContentEditText.getText());
+    }
+
 }
