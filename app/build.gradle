@@ -39,5 +39,10 @@ dependencies {
     compile "com.android.support:design:${supportVersion}"
     compile "com.jakewharton:butterknife:${butterKnifeVersion}"
     apt "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
-    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha8'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+}
+tasks.whenTaskAdded { task ->
+    if(task.name.equals("lint")) {
+        task.enabled = false
+    }
 }
