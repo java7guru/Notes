@@ -1,5 +1,6 @@
 package com.levup.notes.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.levup.notes.R;
 import com.levup.notes.adapters.NotesAdapter;
@@ -23,6 +25,7 @@ import butterknife.OnClick;
 
 public class NotesActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE = 101;
     @BindView(R.id.notes_recycler_view)
     protected RecyclerView recyclerView;
     @BindView(R.id.toolbar)
@@ -59,7 +62,19 @@ public class NotesActivity extends AppCompatActivity {
 
     @OnClick(R.id.fab_button)
     public void onFabBtnClick() {
-        startActivity(EditNoteActivity.newInstance(this));
+        startActivityForResult(EditNoteActivity.newInstance(this), REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == RESULT_OK) {
+            if(requestCode == REQUEST_CODE) {
+                String result = data.getStringExtra(EditNoteActivity.RESULT);
+                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     @Override

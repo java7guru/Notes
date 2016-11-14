@@ -2,6 +2,7 @@ package com.levup.notes.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +18,7 @@ import butterknife.ButterKnife;
 public class EditNoteActivity extends AppCompatActivity {
 
     private static final String SHARE_TYPE = "text/plain";
+    public static final String RESULT = "RESULT";
 
     @BindView(R.id.titleEditText)
     protected EditText mTitleEditText;
@@ -52,7 +54,11 @@ public class EditNoteActivity extends AppCompatActivity {
                 break;
             }
             case R.id.action_share: {
-                share();
+                //share();
+                Intent intent = new Intent();
+                intent.putExtra(RESULT, prepareNoteForSharing());
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
             }
         }
