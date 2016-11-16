@@ -63,7 +63,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         void bindView(Note note) {
             mPrimaryTextView.setText(note.getTitle());
             mSecondaryTextView.setText(note.getText());
-            mDateTextView.setText(String.valueOf(note.getTime()));
+            mDateTextView.setText(note.getTime());
         }
     }
 

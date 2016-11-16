@@ -1,8 +1,8 @@
 package com.levup.notes.activities;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.XmlResourceParser;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 
 import com.levup.notes.R;
+import com.levup.notes.db.NotesContract;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class EditNoteActivity extends AppCompatActivity {
 
@@ -54,11 +56,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 break;
             }
             case R.id.action_share: {
-                //share();
-                Intent intent = new Intent();
-                intent.putExtra(RESULT, prepareNoteForSharing());
-                setResult(RESULT_OK, intent);
-                finish();
+                share();
                 break;
             }
         }
@@ -78,6 +76,20 @@ public class EditNoteActivity extends AppCompatActivity {
                 R.string.sharing_template,
                 mTitleEditText.getText(),
                 mContentEditText.getText());
+    }
+
+    @OnClick(R.id.saveBtn)
+    public void onSaveBtnClick() {
+        insertNote();
+        finish();
+    }
+
+    private void insertNote() {
+        ContentValues values = new ContentValues();
+        values.put(NotesContract.TITLE_COLUMN, mTitleEditText.getText().toString());
+        values.put(NotesContract.TEXT_COLUMN, mContentEditText.getText().toString());
+        values.put(NotesContract.TIME_COLUMN, String.valueOf(System.currentTimeMillis()));
+        getContentResolver().insert(NotesContract.CONTENT_URI, values);
     }
 
 }

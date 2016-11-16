@@ -16,8 +16,11 @@
             </intent-filter>
         </activity>
         <activity
-
             android:name=".activities.EditNoteActivity"/>
+        <provider
+            android:authorities="com.levup.notes"
+            android:name=".providers.NotesContentProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

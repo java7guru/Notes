@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -30,6 +31,10 @@
     </style>
 
     <style name="PrimaryColorAccentStyle">
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="PrimaryColorBackButtonTheme" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 

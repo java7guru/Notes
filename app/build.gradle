@@ -22,7 +22,7 @@ android {
 }
 
 buildscript {
-    ext.supportVersion = '25.0.0'
+    ext.supportVersion = '25.0.1'
     ext.butterKnifeVersion = '8.4.0'
     repositories {
         mavenCentral()
@@ -40,6 +40,7 @@ dependencies {
     compile "com.jakewharton:butterknife:${butterKnifeVersion}"
     apt "com.jakewharton:butterknife-compiler:${butterKnifeVersion}"
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta3'
+    compile 'com.github.provigen:ProviGen-lib:2.0.1'
 }
 tasks.whenTaskAdded { task ->
     if(task.name.equals("lint")) {
