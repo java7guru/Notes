@@ -3,12 +3,15 @@ package com.levup.notes.model;
 import android.database.Cursor;
 
 import com.levup.notes.db.NotesContract;
+import com.tjeannin.provigen.ProviGenBaseContract;
 
 /**
  * Created by java on 07.11.2016.
  */
 
 public class Note {
+
+    private long mId;
 
     private String mTitle = null;
 
@@ -19,9 +22,14 @@ public class Note {
     public Note() {}
 
     public Note(Cursor data) {
+        mId = data.getLong(data.getColumnIndex(ProviGenBaseContract._ID));
         mTitle = data.getString(data.getColumnIndex(NotesContract.TITLE_COLUMN));
         mText = data.getString(data.getColumnIndex(NotesContract.TEXT_COLUMN));
         mTime = data.getString(data.getColumnIndex(NotesContract.TIME_COLUMN));
+    }
+
+    public long getId() {
+        return mId;
     }
 
     public String getTitle() {

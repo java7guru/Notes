@@ -23,6 +23,16 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
 
     private List<Note> mDataSource = null;
 
+    private View.OnClickListener mOnItemClickListener = null;
+
+    public View.OnClickListener getOnItemClickListener() {
+        return mOnItemClickListener;
+    }
+
+    public void setOnItemClickListener(View.OnClickListener onItemClickListener) {
+        this.mOnItemClickListener = onItemClickListener;
+    }
+
     public void setDataSource(List<Note> dataSource) {
         this.mDataSource = dataSource;
         notifyDataSetChanged();
@@ -39,6 +49,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     public void onBindViewHolder(NotesViewHolder holder, int position) {
         Note note = mDataSource.get(position);
         holder.bindView(note);
+        holder.itemView.setOnClickListener(mOnItemClickListener);
     }
 
     @Override
@@ -47,6 +58,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
     }
 
     public static class NotesViewHolder extends RecyclerView.ViewHolder {
+
+        private Note mNote;
 
         @BindView(R.id.primary_text_view)
         protected TextView mPrimaryTextView;
@@ -61,9 +74,14 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NotesViewHol
         }
 
         void bindView(Note note) {
+            mNote = note;
             mPrimaryTextView.setText(note.getTitle());
             mSecondaryTextView.setText(note.getText());
             mDateTextView.setText(note.getTime());
+        }
+
+        public Note getNote() {
+            return mNote;
         }
     }
 

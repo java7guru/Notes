@@ -16,6 +16,7 @@ import android.view.MenuItem;
 
 import com.levup.notes.R;
 import com.levup.notes.adapters.NotesAdapter;
+import com.levup.notes.adapters.NotesAdapter.NotesViewHolder;
 import com.levup.notes.db.NotesContract;
 import com.levup.notes.model.Note;
 
@@ -83,7 +84,6 @@ public class NotesActivity extends AppCompatActivity implements LoaderManager.Lo
                 return super.onOptionsItemSelected(item);
         }
 
-
     }
 
     @Override
@@ -106,6 +106,11 @@ public class NotesActivity extends AppCompatActivity implements LoaderManager.Lo
         NotesAdapter adapter = new NotesAdapter();
         recyclerView.setAdapter(adapter);
         adapter.setDataSource(dataSource);
+        adapter.setOnItemClickListener( view -> {
+            NotesViewHolder holder = (NotesViewHolder) recyclerView.findContainingViewHolder(view);
+            if(holder == null) return;
+            startActivity(EditNoteActivity.newInstance(this, holder.getNote().getId()));
+        });
     }
 
     @Override
