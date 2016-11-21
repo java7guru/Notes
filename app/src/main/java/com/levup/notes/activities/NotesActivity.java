@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.levup.notes.R;
 import com.levup.notes.adapters.NotesAdapter;
@@ -27,7 +28,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class NotesActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
+public class NotesActivity extends AppCompatActivity
+        implements
+        LoaderManager.LoaderCallbacks<Cursor>,
+        View.OnClickListener {
 
     @BindView(R.id.notes_recycler_view)
     protected RecyclerView recyclerView;
@@ -106,15 +110,18 @@ public class NotesActivity extends AppCompatActivity implements LoaderManager.Lo
         NotesAdapter adapter = new NotesAdapter();
         recyclerView.setAdapter(adapter);
         adapter.setDataSource(dataSource);
-        adapter.setOnItemClickListener( view -> {
-            NotesViewHolder holder = (NotesViewHolder) recyclerView.findContainingViewHolder(view);
-            if(holder == null) return;
-            startActivity(EditNoteActivity.newInstance(this, holder.getNote().getId()));
-        });
+        adapter.setOnItemClickListener(this);
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        NotesViewHolder holder = (NotesViewHolder) recyclerView.findContainingViewHolder(view);
+        if(holder == null) return;
+        startActivity(EditNoteActivity.newInstance(this, holder.getNote().getId()));
     }
 }

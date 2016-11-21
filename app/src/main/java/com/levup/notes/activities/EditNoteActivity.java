@@ -4,14 +4,17 @@ import android.app.LoaderManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.CursorLoader;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
@@ -43,11 +46,13 @@ public class EditNoteActivity extends AppCompatActivity
     private String mOriginalTitle = "";
     private String mOriginalText = "";
 
-    public static Intent newInstance(Context context) {
+    @NonNull
+    public static Intent newInstance(@NonNull Context context) {
         return new Intent(context, EditNoteActivity.class);
     }
 
-    public static Intent newInstance(Context context, long id) {
+    @NonNull
+    public static Intent newInstance(@NonNull Context context, long id) {
         Intent intent = newInstance(context);
         intent.putExtra(ProviGenBaseContract._ID, id);
         return intent;
@@ -81,7 +86,7 @@ public class EditNoteActivity extends AppCompatActivity
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home: {
-                safetyFinish(() -> finish());
+                safetyFinish(this::finish);
                 break;
             }
             case R.id.action_share: {
@@ -104,6 +109,18 @@ public class EditNoteActivity extends AppCompatActivity
                     null);
         }
         finish();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putLong(ProviGenBaseContract._ID, mId);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mId = savedInstanceState.getLong(ProviGenBaseContract._ID);
     }
 
     private void share() {
@@ -136,7 +153,7 @@ public class EditNoteActivity extends AppCompatActivity
     }
 
     @Override
-    public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
+    public Loader<Cursor> onCreateLoader(int id, Bundle bundle) {
         return new CursorLoader(
                 this,
                 Uri.withAppendedPath(NotesContract.CONTENT_URI, String.valueOf(mId)),
@@ -163,16 +180,16 @@ public class EditNoteActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        safetyFinish(() -> EditNoteActivity.super.onBackPressed());
+        safetyFinish(EditNoteActivity.super::onBackPressed);
     }
 
-    private void safetyFinish(Runnable finish) {
+    private void safetyFinish(Runnable runnable) {
         if(mOriginalTitle.equals(mTitleEditText.getText().toString())
                 && mOriginalText.equals(mContentEditText.getText().toString())) {
-            finish.run();
+            runnable.run();
             return;
         }
-        showDoYouSureAlert(finish);
+        showDoYouSureAlert(runnable);
     }
 
     private void save() {
@@ -187,16 +204,17 @@ public class EditNoteActivity extends AppCompatActivity
         return mId != -1;
     }
 
-    private void showDoYouSureAlert(final Runnable finish) {
+    private void showDoYouSureAlert(final Runnable runnable) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.do_you_sure_alert_title);
         builder.setMessage(R.string.do_yout_sure_alert_do_you_want_to_save_change);
         builder.setCancelable(false);
-        builder.setPositiveButton(android.R.string.yes, (dialogInterface, i) -> {
+        builder.setPositiveButton(android.R.string.yes, (dialogInterface, id) -> {
             save();
-            finish.run();
+            runnable.run();
         });
-        builder.setNegativeButton(android.R.string.no, (dialogInterface, i) -> finish.run());
+        builder.setNeutralButton(android.R.string.cancel, (dialogInterface, i) -> dialogInterface.dismiss());
+        builder.setNegativeButton(android.R.string.no, (dialogInterface, id) -> runnable.run());
         builder.show();
     }
 

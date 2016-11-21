@@ -5,11 +5,13 @@ import android.database.Cursor;
 import com.levup.notes.db.NotesContract;
 import com.tjeannin.provigen.ProviGenBaseContract;
 
+import java.io.Serializable;
+
 /**
  * Created by java on 07.11.2016.
  */
 
-public class Note {
+public class Note implements Serializable {
 
     private long mId;
 
