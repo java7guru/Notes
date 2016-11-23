@@ -1,5 +1,6 @@
 package com.levup.notes.activities;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
@@ -51,6 +52,12 @@ public class NotesActivity extends AppCompatActivity
                 false);
         recyclerView.setLayoutManager(layoutManager);
         getSupportLoaderManager().initLoader(R.id.notes_loader, null, this);
+
+        for(int i = 0; i < 10; i ++) {
+            ContentValues values = new ContentValues();
+            values.put(NotesContract.TEXT_COLUMN, "fddfdf" + i);
+            getContentResolver().insert(NotesContract.CONTENT_URI, values);
+        }
     }
 
     @Override
